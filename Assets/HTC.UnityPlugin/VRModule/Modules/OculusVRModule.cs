@@ -143,6 +143,9 @@ namespace HTC.UnityPlugin.VRModuleManagement
                                         currState[i].deviceModel = VRModuleDeviceModel.OculusGoController;
                                         break;
                                     case "Gear VR":
+                                    case "Galaxy S6":
+                                    case "Galaxy S7":
+                                    case "Galaxy S8":
                                         currState[i].deviceModel = VRModuleDeviceModel.OculusGearVrController;
                                         break;
                                     case "Oculus Rift":
@@ -234,7 +237,7 @@ namespace HTC.UnityPlugin.VRModuleManagement
                                         var ctrlState = OVRPlugin.GetControllerState((uint)OVRPlugin.Controller.LTrackedRemote);
 
                                         currState[i].SetButtonPress(VRModuleRawButton.Touchpad, (ctrlState.Buttons & (uint)OVRInput.RawButton.LTouchpad) != 0u);
-                                        currState[i].SetButtonPress(VRModuleRawButton.ApplicationMenu, (ctrlState.Buttons & (uint)OVRInput.RawButton.Back) != 0u);
+                                        currState[i].SetButtonPress(VRModuleRawButton.ApplicationMenu, OVRInput.GetDown(OVRInput.Button.Two));
                                         currState[i].SetButtonPress(VRModuleRawButton.Trigger, (ctrlState.Buttons & (uint)(OVRInput.RawButton.A | OVRInput.RawButton.LIndexTrigger)) != 0u);
                                         currState[i].SetButtonPress(VRModuleRawButton.DPadLeft, (ctrlState.Buttons & (uint)OVRInput.RawButton.DpadLeft) != 0u);
                                         currState[i].SetButtonPress(VRModuleRawButton.DPadUp, (ctrlState.Buttons & (uint)OVRInput.RawButton.DpadUp) != 0u);
@@ -242,6 +245,11 @@ namespace HTC.UnityPlugin.VRModuleManagement
                                         currState[i].SetButtonPress(VRModuleRawButton.DPadDown, (ctrlState.Buttons & (uint)OVRInput.RawButton.DpadDown) != 0u);
 
                                         currState[i].SetButtonTouch(VRModuleRawButton.Touchpad, (ctrlState.Touches & (uint)OVRInput.RawTouch.LTouchpad) != 0u);
+
+                                        Vector2 primaryTouchpad = OVRInput.Get(OVRInput.Axis2D.PrimaryTouchpad);
+                                        currState[i].SetAxisValue(VRModuleRawAxis.TouchpadX, primaryTouchpad.x);
+                                        currState[i].SetAxisValue(VRModuleRawAxis.TouchpadY, primaryTouchpad.y);
+
                                     }
                                     break;
                                 case OVRPlugin.Node.HandRight:
@@ -250,7 +258,7 @@ namespace HTC.UnityPlugin.VRModuleManagement
                                         var ctrlState = OVRPlugin.GetControllerState((uint)OVRPlugin.Controller.RTrackedRemote);
 
                                         currState[i].SetButtonPress(VRModuleRawButton.Touchpad, (ctrlState.Buttons & unchecked((uint)OVRInput.RawButton.RTouchpad)) != 0u);
-                                        currState[i].SetButtonPress(VRModuleRawButton.ApplicationMenu, (ctrlState.Buttons & (uint)OVRInput.RawButton.Back) != 0u);
+                                        currState[i].SetButtonPress(VRModuleRawButton.ApplicationMenu, OVRInput.GetDown(OVRInput.Button.Two));
                                         currState[i].SetButtonPress(VRModuleRawButton.Trigger, (ctrlState.Buttons & (uint)(OVRInput.RawButton.A | OVRInput.RawButton.RIndexTrigger)) != 0u);
                                         currState[i].SetButtonPress(VRModuleRawButton.DPadLeft, (ctrlState.Buttons & (uint)OVRInput.RawButton.DpadLeft) != 0u);
                                         currState[i].SetButtonPress(VRModuleRawButton.DPadUp, (ctrlState.Buttons & (uint)OVRInput.RawButton.DpadUp) != 0u);
@@ -258,6 +266,11 @@ namespace HTC.UnityPlugin.VRModuleManagement
                                         currState[i].SetButtonPress(VRModuleRawButton.DPadDown, (ctrlState.Buttons & (uint)OVRInput.RawButton.DpadDown) != 0u);
 
                                         currState[i].SetButtonTouch(VRModuleRawButton.Touchpad, (ctrlState.Touches & unchecked((uint)OVRInput.RawTouch.RTouchpad)) != 0u);
+
+                                        Vector2 primaryTouchpad = OVRInput.Get(OVRInput.Axis2D.PrimaryTouchpad);
+                                        currState[i].SetAxisValue(VRModuleRawAxis.TouchpadX, primaryTouchpad.x);
+                                        currState[i].SetAxisValue(VRModuleRawAxis.TouchpadY, primaryTouchpad.y);
+
                                     }
                                     break;
                             }
