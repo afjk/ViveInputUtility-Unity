@@ -55,6 +55,14 @@ namespace HTC.UnityPlugin.Vive
                     }
                     break;
 #endif
+#if VIU_OCULUSVR
+                case VRModuleActiveEnum.OculusVR:
+                    if( GetComponent<OVRManager>() == null )
+                    {
+                        gameObject.AddComponent<OVRManager>();
+                    }
+                    break;
+#endif
                 default:
                     break;
             }
