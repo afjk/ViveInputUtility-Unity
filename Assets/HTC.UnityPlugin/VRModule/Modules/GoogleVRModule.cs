@@ -302,6 +302,9 @@ namespace HTC.UnityPlugin.VRModuleManagement
             if (m_gvrArmModel == null)
             {
                 m_gvrArmModel = VRModule.Instance.gameObject.AddComponent<GvrArmModel>();
+                m_gvrArmModel.isLockedToNeck = true;
+                var trackedController = VRModule.Instance.gameObject.AddComponent<GvrTrackedController>();
+                trackedController.ArmModel = m_gvrArmModel;
             }
         }
 
