@@ -160,30 +160,36 @@ namespace HTC.UnityPlugin.VRModuleManagement
                             currState.deviceModel = VRModuleDeviceModel.OculusSensor;
                             break;
                         case VRModuleDeviceClass.Controller:
-                            switch (ovrProductName)
+                            if(Application.isMobilePlatform)
                             {
-                                case "Oculus Go":
-                                    currState.deviceModel = VRModuleDeviceModel.OculusGoController;
-                                    break;
-                                case "Galaxy S6":
-                                case "Galaxy S7":
-                                case "Galaxy S8":
-                                case "Galaxy S9":
-                                    currState.deviceModel = VRModuleDeviceModel.OculusGearVrController;
-                                    break;
-                                case "Oculus Rift":
-                                default:
-                                    switch (node)
-                                    {
-                                        case OVRPlugin.Node.HandLeft:
-                                            currState.deviceModel = VRModuleDeviceModel.OculusTouchLeft;
-                                            break;
-                                        case OVRPlugin.Node.HandRight:
-                                        default:
-                                            currState.deviceModel = VRModuleDeviceModel.OculusTouchRight;
-                                            break;
-                                    }
-                                    break;
+                                switch (ovrProductName)
+                                {
+                                    case "Oculus Go":
+                                        currState.deviceModel = VRModuleDeviceModel.OculusGoController;
+                                        break;
+                                    default:
+                                        currState.deviceModel = VRModuleDeviceModel.OculusGearVrController;
+                                        break;
+                                }
+                            }
+                            else
+                            {
+                                switch (ovrProductName)
+                                {
+                                    case "Oculus Rift":
+                                    default:
+                                        switch (node)
+                                        {
+                                            case OVRPlugin.Node.HandLeft:
+                                                currState.deviceModel = VRModuleDeviceModel.OculusTouchLeft;
+                                                break;
+                                            case OVRPlugin.Node.HandRight:
+                                            default:
+                                                currState.deviceModel = VRModuleDeviceModel.OculusTouchRight;
+                                                break;
+                                        }
+                                        break;
+                                }
                             }
                             break;
                     }
