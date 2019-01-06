@@ -33,7 +33,9 @@ namespace HTC.UnityPlugin.VRModuleManagement
 
         public override bool ShouldActiveModule()
         {
-            return VIUSettings.activateGoogleVRModule && XRSettings.enabled && XRSettings.loadedDeviceName == "daydream";
+            //            return VIUSettings.activateGoogleVRModule && XRSettings.enabled && XRSettings.loadedDeviceName == "daydream";
+            return !VIUSettings.activateSimulatorModule && VIUSettings.activateGoogleVRModule;
+
         }
 
         public override void Update()
