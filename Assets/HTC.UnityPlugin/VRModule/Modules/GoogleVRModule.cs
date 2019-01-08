@@ -33,7 +33,9 @@ namespace HTC.UnityPlugin.VRModuleManagement
 
         public override bool ShouldActiveModule()
         {
-            return VIUSettings.activateGoogleVRModule && XRSettings.enabled && XRSettings.loadedDeviceName == "daydream";
+            //            return VIUSettings.activateGoogleVRModule && XRSettings.enabled && XRSettings.loadedDeviceName == "daydream";
+            return !VIUSettings.activateSimulatorModule && VIUSettings.activateGoogleVRModule;
+
         }
 
         public override void Update()
@@ -86,6 +88,14 @@ namespace HTC.UnityPlugin.VRModuleManagement
             else
             {
                 m_rightArm = VRModule.Instance.GetComponent<GvrArmModel>();
+
+               if (m_rightArm == null)
+               {
+                   m_rightArm = VRModule.Instance.gameObject.AddComponent<GvrArmModel>();
+                   m_rightArm.isLockedToNeck = true;
+                   var trackedController = VRModule.Instance.gameObject.AddComponent<GvrTrackedController>();
+                   trackedController.ArmModel = m_rightArm;
+               }
             }
             m_rightArm.ControllerInputDevice = m_rightDevice;
 
@@ -96,6 +106,14 @@ namespace HTC.UnityPlugin.VRModuleManagement
             else
             {
                 m_leftArm = VRModule.Instance.GetComponent<GvrArmModel>();
+
+               if (m_leftArm == null)
+               {
+                   m_leftArm = VRModule.Instance.gameObject.AddComponent<GvrArmModel>();
+                   m_leftArm.isLockedToNeck = true;
+                   var trackedController = VRModule.Instance.gameObject.AddComponent<GvrTrackedController>();
+                   trackedController.ArmModel = m_leftArm;
+               }
             }
             m_leftArm.ControllerInputDevice = m_leftDevice;
         }
@@ -284,6 +302,9 @@ namespace HTC.UnityPlugin.VRModuleManagement
             if (m_gvrArmModel == null)
             {
                 m_gvrArmModel = VRModule.Instance.gameObject.AddComponent<GvrArmModel>();
+                m_gvrArmModel.isLockedToNeck = true;
+                var trackedController = VRModule.Instance.gameObject.AddComponent<GvrTrackedController>();
+                trackedController.ArmModel = m_gvrArmModel;
             }
         }
 
